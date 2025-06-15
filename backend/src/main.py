@@ -1,8 +1,23 @@
 from fastapi import FastAPI
 from src.http_client import CMCHTTPClient
 from src.config import settings
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 cmc_client = CMCHTTPClient(
     base_url="https://pro-api.coinmarketcap.com",
